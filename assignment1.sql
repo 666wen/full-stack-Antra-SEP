@@ -14,7 +14,7 @@ FROM Production.Product
 -- Product table, excluding the rows that ListPrice is 0.
 SELECT ProductID, Name, Color, ListPrice
 FROM Production.Product
-WHERE ListPrice = 0
+WHERE ListPrice != 0
 
 -- 3. Write a query that retrieves the columns ProductID, Name,
 -- Color and ListPrice from the Production.Product table, the rows that are not NULL for the Color column.
@@ -30,7 +30,7 @@ WHERE Color IS NOT NULL AND ListPrice > 0
 
 -- 5. Write a query that concatenates the columns Name and Color
 -- from the Production.Product table by excluding the rows that are null for color.
-SELECT Name + Color
+SELECT Name + ' ' +Color
 FROM Production.Product
 WHERE Color IS NOT NULL
 
@@ -42,9 +42,9 @@ WHERE Color IS NOT NULL
 -- NAME: Chainring Bolts  --  COLOR: Silver
 -- NAME: Chainring Nut  --  COLOR: Silver
 -- NAME: Chainring  --  COLOR: Black
-SELECT TOP 6 Name, Color
+SELECT Name, Color
 FROM Production.Product
-WHERE Color IN ('Black', 'Silver') 
+WHERE Color IN ('Black', 'Silver') AND Name LIKE '%Crankarm' OR Name LIKE 'Chainring%'
 
 
 -- 7.Write a query to retrieve the to the columns ProductID and Name from the Production.Product table filtered 
