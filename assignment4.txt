@@ -1,0 +1,138 @@
+1. What is index; types of indices; pros and cons
+ANS: -- Index is an on-disk structure associated with a table that increase retrieval speed of rows from the table.
+     -- clustered index and non clustered Index.
+     -- Pros: index helps to improve retrieving speed which improve the performance of select.
+        Coons: slow down other DML statements and cost extra space.
+
+2. What's the difference between Primary key and Unique constraint?
+ANS: Unique constraint can be NULL, but Primary key can not.
+
+3. Tell me about check constraint
+ANS: check constraint limit the value range that can be placed in the column.
+
+4. Difference between temp table and table variable
+ANS: --the life scoop for temp table is local/globle session; table varible is in current batch.
+
+5. Difference between WHERE and HAVING
+ANS: WHERE is filter of individule rows, HAVING only applied to groups as a whole, only filters on aggregation function.
+
+6. Difference between RANK() and DenseRank() — value gap
+ANS: RANK has value gap when there is a tie, DenseRANK will not skip any number in rank.
+
+7. COUNT(*) vs. COUNT(colName)
+ANS: COUNT(*) will include NULL values, COUNT(colName) will not.
+
+8. What's the difference between left join and inner join? JOIN and Subquery, 
+which one has a better performance, why?
+ANS: --INNER JOIN will return records that have matching in both tables. LEFT JOIN will 
+       return all records from left table and the matching records from right table, 
+       for the non-matching records in right table, the result set will be set NULL values.
+
+    -- Join is better than subquery in performance, because SQL server has optimizer for join.
+
+9. What is correlated subquery
+ANS: the inner subquery is dependent on the out query.
+
+10. What is a CTE, why do we need CTE?
+ANS: CTE is Common Table Expression. It specifies a temporary named result set, and improve readability and manageability of complex SQL statement.
+     It can implement recursive CTE that can call itself again and again.
+
+11. What does SQL Profiler do?
+ANS: It is an interface to create and manage traces and analyze and replay trace.
+
+12. What is SQL injection, how to avoid SQL injection?
+ANS: It is a malicious code injection that may destroy the database. It is the most common web hacking technique.
+     Using store procedure to avoid SQL injection.
+
+13. Difference between SP and user defined function? When to use SP when to use function?
+ANS:  difference: -SP is used for DML, functions is for calculation.
+                  -SP is called by its name. Functions are called in SQL query.
+                  -SP may or may not have output. Functions must return some value.
+                  -SP can call function, but function can not call sp.
+             
+     
+14. Criteria of Union and Union all? Difference between UNION and UNION ALL
+ANS: Criteria: - the number of columns must be the same.
+               - the column type must be the same.
+               - alias must be given in the first select statement.
+     difference: - UNION remove all duplicate recordes, Union ALL will not.
+                 - UNION sort the first column ascendingly, Union ALL will not.
+                 - UNION can not be used in recursive CTE, union all can.
+
+15. Steps you take to improve SQL Queries
+ANS: -look at the execution plan.
+     -choose index wisely.
+     -avoid unnecessary joins.
+     -avoid select *.
+     -use join to replace subquery.
+     -use derived table to avoid a lot of grouping by.
+
+16. concurrency problem in transaction
+ANS: 1.dirty read: 
+          t1 allows t2 to read uncommitted data and then t1 rollback
+     2.lost update:
+          t1 allows t2 read and update data, but t2 commit earlier than t1, then t2 will lost its update.
+     3. non repeatable read:
+          t1 read the same data twice while t2 is updating the data
+     4. phantom read
+          t1 read the same data twice while t2 is inserting the data
+
+
+17. what is deadlock, how to prevent
+ANS: a deadlock is a situation in which two or more transactions are waiting for one another to give up locks.
+     
+
+18. what is normalization, 1NF - BCNF, benefits using normalization
+ANS: Database Normalization is a process of organizing data to minimize redundancy (data duplication),
+     which in turn ensures data consistency. 
+     Normalization has a series of steps called “Forms”, the more steps you take 
+     the more normalized your tables are.
+     -First Normal Form: It’s all about atomic values.
+       -One cell, one value;
+       -•No repeating groups.
+    -Second Normal Form: First Normal Form + No Partial Dependency.
+    -Third Normal Form: Second Normal Form + No Transitive Dependency.
+    -BCNF:Stricter version of 3NF.
+
+19. what are the system defined databases?
+ANS: Master: catalog database, keeps info on all user defined databases.
+     Model: The model database is simply a template database. Every time you create a new database, 
+     SQL Server makes a copy of model to form the basis of the new database. If you’d like every new database to start out with certain objects or permissions,
+     you can put them in model, and all new databases will inherit them. You can also change most properties of the model database by using the ALTER DATABASE command, 
+     and those property values will then be used by any new database you create.
+     Msdb: where server agent keeps its activities
+     Tempdb: keeps temporary tables for usage in the query. Removes all tables after closing SQL
+     Mssql system resource: Predefined functionalities. Predefined stored procedures are held here.
+           Exampled of a stored procedure stored is Sp_Help which gives you a table of object name, owner, and object type of everything in the database.
+
+20. composite key
+ANS: A composite key, in the context  of relational  databases, 
+    is a combination  of two or more columns in a table  that can be used  to 
+    uniquely  identify  each row in the  table. 
+    Uniqueness  is only guaranteed  when  the columns are combined; 
+    when  taken individually  the columns do not guarantee uniqueness.
+
+21. candidate key
+ANS: A key that is not a PK but  eligible  to be a PK.
+     Mostly it is a unique key without  null  value.
+
+22. DDL vs. DML
+ANS: DDL-Data Definition Language which allow you to create objects in database. (CREATE, ALTER, DROP)
+     DML-Data Manipulation Language which allow you to query and modify data. (SELECT, INSERT, DELETE, UPDATE)
+
+23. ACID property
+ANS: property of transaction,
+     A: Atomicity--work is atomic.
+     C: Consistency--Whatever happened in the middle of the transaction, this property will never leave your
+                     database in half-completed state.
+     I:Islation--two transaction will be isolated from each other by locking the resource.
+     D:Durability--once the transaction is completed, then the changes it has made to the
+                   database will be parmanent. 
+
+24. table scan vs. index scan
+ANS: table scan-- the reading of every row in a table one by one.
+     index scan--Index scan means iterate over all index items, when item index meets search condition, table row is retrived through index. 
+
+25. Difference between Union and JOIN
+ANS: UNION is used to combine multiple result sets vertically.
+     JOIN is used to combine rows from two or more tables based on the related column between them.
